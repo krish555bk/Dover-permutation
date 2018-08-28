@@ -26,12 +26,21 @@ with open(filename, 'w') as csvfile:
    	for col in row:
 		try:
 			x=whois.whois(col)
-			csvwriter.writerow([(x.domain_name),
-			(x.creation_date),
-			(x.registry_domain_id),
-			(x.state),
-			(x.registrar),
-			(x.expiration_date)])
+			try:
+				csvwriter.writerow([(x.domain_name[1]),
+				(x.creation_date[0]),
+				(x.registry_domain_id),
+				(x.state),
+				(x.registrar),
+				(x.expiration_date[0])])
+			except TypeError:
+				csvwriter.writerow([(x.domain_name),
+				(x.creation_date),
+				(x.registry_domain_id),
+				(x.state),
+				(x.registrar),
+				(x.expiration_date)])
+				
 		except(whois.parser.PywhoisError):
 			print('\n')
 	print('\n')
